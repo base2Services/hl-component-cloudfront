@@ -102,21 +102,21 @@ def _create_distribution(client, event, properties, stack_arn):
 
     logger.info("Outputs:\n%s" % json.dumps(outputs))
 
-    # TODO: wait for the distribution to be created
-    wait_for_status = properties['UpdateConfig'].get('WaitForCreation', True)
-    if (wait_for_status) {
-        update_polling_rule(
-            rule_name=properties['DistributionHelpers']['PollDistributionsRule'],
-            function_arn=properties['DistributionHelpers']['PollDistributionsFunctionArn'],
-            distribution_id=physical_resource_id,
-            distribution_arn=distribution_arn,
-            desired_state='Deployed',
-            enabled=distribution_config['Enabled'],
-            resource_to_signal=physical_resource_id,
-            event=event
-        )
-        exit(0)
-    }
+    # # TODO: wait for the distribution to be created
+    # wait_for_status = properties['UpdateConfig'].get('WaitForCreation', True)
+    # if (wait_for_status) {
+    #     update_polling_rule(
+    #         rule_name=properties['DistributionHelpers']['PollDistributionsRule'],
+    #         function_arn=properties['DistributionHelpers']['PollDistributionsFunctionArn'],
+    #         distribution_id=physical_resource_id,
+    #         distribution_arn=distribution_arn,
+    #         desired_state='Deployed',
+    #         enabled=distribution_config['Enabled'],
+    #         resource_to_signal=physical_resource_id,
+    #         event=event
+    #     )
+    #     exit(0)
+    # }
 
     return outputs
 
@@ -142,20 +142,20 @@ def _update_distribution(client, properties, physical_resource_id):
         'DomainName': distribution['DomainName']
     }
 
-    # TODO: wait for the distribution to be created
-    wait_for_status = properties['UpdateConfig'].get('WaitForUpdate', True)
-    if (wait_for_status) {
-      update_polling_rule(
-            rule_name=properties['DistributionHelpers']['PollDistributionsRule'],
-            function_arn=properties['DistributionHelpers']['PollDistributionsFunctionArn'],
-            distribution_id=physical_resource_id,
-            distribution_arn=distribution_arn,
-            desired_state='Deployed',
-            enabled=distribution_config['Enabled'],
-            resource_to_signal=physical_resource_id
-        )
-        exit(0)
-    }
+    # # TODO: wait for the distribution to be created
+    # wait_for_status = properties['UpdateConfig'].get('WaitForUpdate', True)
+    # if (wait_for_status) {
+    #   update_polling_rule(
+    #         rule_name=properties['DistributionHelpers']['PollDistributionsRule'],
+    #         function_arn=properties['DistributionHelpers']['PollDistributionsFunctionArn'],
+    #         distribution_id=physical_resource_id,
+    #         distribution_arn=distribution_arn,
+    #         desired_state='Deployed',
+    #         enabled=distribution_config['Enabled'],
+    #         resource_to_signal=physical_resource_id
+    #     )
+    #     exit(0)
+    # }
 
     return outputs
 
@@ -209,26 +209,26 @@ def _delete_distribution(client, properties, physical_resource_id):
         client.tag_resource(Resource=distribution_arn, Tags=tags)
 
         wait_for_status = properties['UpdateConfig'].get('WaitForDeletion', True)
-        if (wait_for_status) {
-            update_polling_rule(
-                rule_name=properties['DistributionHelpers']['PollDistributionsRule'],
-                function_arn=properties['DistributionHelpers']['PollDistributionsFunctionArn'],
-                distribution_id=physical_resource_id,
-                distribution_arn=distribution_arn,
-                desired_state='Deployed',
-                enabled=False,
-                resource_to_signal=physical_resource_id
-            )
-            exit(0)
-        }
-        else {
-            update_disable_rule(
-                rule_name=properties['DistributionHelpers']['CleanUpDistributionsRule'],
-                function_arn=properties['DistributionHelpers']['CleanUpDistributionsFunctionArn'],
-                distribution_id=physical_resource_id,
-                distribution_arn=distribution_arn
-            )
-        }
+        # if (wait_for_status) {
+        #     update_polling_rule(
+        #         rule_name=properties['DistributionHelpers']['PollDistributionsRule'],
+        #         function_arn=properties['DistributionHelpers']['PollDistributionsFunctionArn'],
+        #         distribution_id=physical_resource_id,
+        #         distribution_arn=distribution_arn,
+        #         desired_state='Deployed',
+        #         enabled=False,
+        #         resource_to_signal=physical_resource_id
+        #     )
+        #     exit(0)
+        # }
+        # else {
+        #     update_disable_rule(
+        #         rule_name=properties['DistributionHelpers']['CleanUpDistributionsRule'],
+        #         function_arn=properties['DistributionHelpers']['CleanUpDistributionsFunctionArn'],
+        #         distribution_id=physical_resource_id,
+        #         distribution_arn=distribution_arn
+        #     )
+        # }
 
         logger.info("Success.")
 
